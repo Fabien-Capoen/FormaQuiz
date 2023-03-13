@@ -25,6 +25,10 @@ class QuestionType
     {
         $this->questions = new ArrayCollection();
     }
+    public function __toString(): string
+    {
+        return $this->libelle;
+    }
 
     public function getId(): ?int
     {
