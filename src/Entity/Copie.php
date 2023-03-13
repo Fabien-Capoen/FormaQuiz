@@ -17,7 +17,7 @@ class Copie
 
     #[ORM\ManyToOne(inversedBy: 'copies')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?Apprenant $apprenant = null;
+    private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'copies')]
     #[ORM\JoinColumn(nullable: false)]
@@ -42,14 +42,14 @@ class Copie
         return $this->id;
     }
 
-    public function getApprenant(): ?Apprenant
+    public function getUser(): ?User
     {
-        return $this->apprenant;
+        return $this->user;
     }
 
-    public function setApprenant(?Apprenant $apprenant): self
+    public function setUser(?User $user): self
     {
-        $this->apprenant = $apprenant;
+        $this->user = $user;
 
         return $this;
     }

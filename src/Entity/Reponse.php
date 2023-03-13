@@ -19,8 +19,6 @@ class Reponse
     #[ORM\ManyToOne(inversedBy: 'reponses')]
     private ?Copie $copie = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reponses')]
-    private ?Apprenant $apprenant = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $annotation = null;
@@ -42,6 +40,10 @@ class Reponse
 
     #[ORM\Column]
     private ?bool $choixrep4 = null;
+
+    #[ORM\ManyToOne(inversedBy: 'reponse')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function getId(): ?int
     {
@@ -72,17 +74,6 @@ class Reponse
         return $this;
     }
 
-    public function getApprenant(): ?Apprenant
-    {
-        return $this->apprenant;
-    }
-
-    public function setApprenant(?Apprenant $apprenant): self
-    {
-        $this->apprenant = $apprenant;
-
-        return $this;
-    }
 
     public function getAnnotation(): ?string
     {
@@ -164,6 +155,18 @@ class Reponse
     public function setChoixrep4(bool $choixrep4): self
     {
         $this->choixrep4 = $choixrep4;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

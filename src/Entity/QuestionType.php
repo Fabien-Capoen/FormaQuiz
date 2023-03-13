@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TypeRepository::class)]
-class Type
+class QuestionType
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,12 +18,12 @@ class Type
     #[ORM\Column(length: 255)]
     private ?string $libelle = null;
 
-    #[ORM\OneToMany(mappedBy: 'type', targetEntity: Quiz::class)]
-    private Collection $quiz;
+    #[ORM\OneToMany(mappedBy: 'questionType', targetEntity: Question::class)]
+    private Collection $questions;
 
     public function __construct()
     {
-        $this->quiz = new ArrayCollection();
+        $this->questions = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -44,32 +44,33 @@ class Type
     }
 
     /**
-     * @return Collection<int, Quiz>
+     * @return Collection<int, Question>
      */
-    public function getQuiz(): Collection
+    public function getQuestions(): Collection
     {
-        return $this->quiz;
+        return $this->questions;
     }
 
-    public function addQuiz(Quiz $quiz): self
+    public function addQuestion(Question $question): self
     {
-        if (!$this->quiz->contains($quiz)) {
-            $this->quiz->add($quiz);
-            $quiz->setType($this);
+        if (!$this->questions->contains($question)) {
+            $this->questions->add($question);
+            $question->setQuestionType($this);
         }
 
         return $this;
     }
 
-    public function removeQuiz(Quiz $quiz): self
+    public function removeQuestion(Question $question): self
     {
-        if ($this->quiz->removeElement($quiz)) {
+        if ($this->questions->removeElement($question)) {
             // set the owning side to null (unless already changed)
-            if ($quiz->getType() === $this) {
-                $quiz->setType(null);
+            if ($question->getQuestionType() === $this) {
+                $question->setQuestionType(null);
             }
         }
 
         return $this;
     }
+
 }

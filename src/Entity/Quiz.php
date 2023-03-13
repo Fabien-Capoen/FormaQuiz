@@ -25,23 +25,21 @@ class Quiz
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_fin = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quiz')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Formateur $Formateur = null;
 
     #[ORM\ManyToOne(inversedBy: 'quiz')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Status $status = null;
 
-    #[ORM\ManyToOne(inversedBy: 'quiz')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Type $type = null;
 
     #[ORM\OneToMany(mappedBy: 'quiz', targetEntity: Copie::class)]
     private Collection $copies;
 
     #[ORM\ManyToMany(targetEntity: Formation::class, inversedBy: 'quiz')]
     private Collection $formation;
+
+    #[ORM\ManyToOne(inversedBy: 'quiz')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $user = null;
 
     public function __construct()
     {
@@ -90,17 +88,6 @@ class Quiz
         return $this;
     }
 
-    public function getFormateur(): ?Formateur
-    {
-        return $this->Formateur;
-    }
-
-    public function setFormateur(?Formateur $Formateur): self
-    {
-        $this->Formateur = $Formateur;
-
-        return $this;
-    }
 
     public function getStatus(): ?Status
     {
@@ -114,17 +101,6 @@ class Quiz
         return $this;
     }
 
-    public function getType(): ?Type
-    {
-        return $this->type;
-    }
-
-    public function setType(?Type $type): self
-    {
-        $this->type = $type;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Copie>
@@ -176,6 +152,18 @@ class Quiz
     public function removeFormation(Formation $formation): self
     {
         $this->formation->removeElement($formation);
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
