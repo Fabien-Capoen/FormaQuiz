@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ReponseRepository;
 use Doctrine\ORM\Mapping as ORM;
+use phpDocumentor\Reflection\Types\Nullable;
 
 #[ORM\Entity(repositoryClass: ReponseRepository::class)]
 class Reponse
@@ -23,22 +24,22 @@ class Reponse
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $annotation = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?float $note = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reponse = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $choixrep1 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $choixrep2 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $choixrep3 = null;
 
-    #[ORM\Column]
+    #[ORM\Column(nullable: true)]
     private ?bool $choixrep4 = null;
 
     #[ORM\ManyToOne(inversedBy: 'reponse')]

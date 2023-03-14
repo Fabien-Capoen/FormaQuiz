@@ -2,27 +2,23 @@
 
 namespace App\Form;
 
-use App\Entity\User;
+use App\Entity\Quiz;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserType extends AbstractType
+class QuizType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('status')
             ->add('nom')
-            ->add('prenom')
-            ->add('email')
+            ->add('date_debut')
+            ->add('date_fin')
             ->add('formation')
-            ->add('password', PasswordType::class)
-            ->add("confirmation", PasswordType::class, [
-                "mapped" => false,
-                "label" => "confirmer mdp",
-            ])
+            ->add('user')
             ->add("Envoyer", SubmitType::class, ["attr" => ["class" => "button"]]);
         ;
     }
@@ -30,7 +26,7 @@ class UserType extends AbstractType
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => User::class
+            'data_class' => Quiz::class,
         ]);
     }
 }

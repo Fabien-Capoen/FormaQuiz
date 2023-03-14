@@ -21,17 +21,6 @@ class Question
     #[ORM\Column]
     private ?float $note_max = null;
 
-    #[ORM\Column]
-    private ?bool $reponse1 = null;
-
-    #[ORM\Column]
-    private ?bool $reponse2 = null;
-
-    #[ORM\Column]
-    private ?bool $reponse3 = null;
-
-    #[ORM\Column]
-    private ?bool $reponse4 = null;
 
     #[ORM\OneToMany(mappedBy: 'question', targetEntity: Reponse::class)]
     private Collection $reponses;
@@ -40,9 +29,25 @@ class Question
     #[ORM\JoinColumn(nullable: false)]
     private ?QuestionType $questionType = null;
 
+    #[ORM\Column(length: 255)]
+    private ?string $reponse1 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $reponse2 = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $reponse3 = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $reponse4 = null;
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
+    }
+    public function __toString(): string
+    {
+        return $this->question;
     }
 
     public function getId(): ?int
@@ -74,53 +79,6 @@ class Question
         return $this;
     }
 
-    public function isReponse1(): ?bool
-    {
-        return $this->reponse1;
-    }
-
-    public function setReponse1(bool $reponse1): self
-    {
-        $this->reponse1 = $reponse1;
-
-        return $this;
-    }
-
-    public function isReponse2(): ?bool
-    {
-        return $this->reponse2;
-    }
-
-    public function setReponse2(bool $reponse2): self
-    {
-        $this->reponse2 = $reponse2;
-
-        return $this;
-    }
-
-    public function isReponse3(): ?bool
-    {
-        return $this->reponse3;
-    }
-
-    public function setReponse3(bool $reponse3): self
-    {
-        $this->reponse3 = $reponse3;
-
-        return $this;
-    }
-
-    public function isReponse4(): ?bool
-    {
-        return $this->reponse4;
-    }
-
-    public function setReponse4(bool $reponse4): self
-    {
-        $this->reponse4 = $reponse4;
-
-        return $this;
-    }
 
     /**
      * @return Collection<int, Reponse>
@@ -160,6 +118,54 @@ class Question
     public function setQuestionType(?QuestionType $questionType): self
     {
         $this->questionType = $questionType;
+
+        return $this;
+    }
+
+    public function getReponse1(): ?string
+    {
+        return $this->reponse1;
+    }
+
+    public function setReponse1(string $reponse1): self
+    {
+        $this->reponse1 = $reponse1;
+
+        return $this;
+    }
+
+    public function getReponse2(): ?string
+    {
+        return $this->reponse2;
+    }
+
+    public function setReponse2(string $reponse2): self
+    {
+        $this->reponse2 = $reponse2;
+
+        return $this;
+    }
+
+    public function getReponse3(): ?string
+    {
+        return $this->reponse3;
+    }
+
+    public function setReponse3(?string $reponse3): self
+    {
+        $this->reponse3 = $reponse3;
+
+        return $this;
+    }
+
+    public function getReponse4(): ?string
+    {
+        return $this->reponse4;
+    }
+
+    public function setReponse4(string $reponse4): self
+    {
+        $this->reponse4 = $reponse4;
 
         return $this;
     }

@@ -50,6 +50,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->reponse = new ArrayCollection();
         $this->roles = ["ROLE_USER"];
     }
+    public function __toString(): string
+    {
+        return $this->nom ." ". $this->prenom;
+
+    }
 
     public function getId(): ?int
     {

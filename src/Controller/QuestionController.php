@@ -26,7 +26,7 @@ class QuestionController extends AbstractController
             $manager->persist($question);
             $manager->flush();
 
-            return $this->render('success');
+            return $this->render('provisoire/provisoire.html.twig');
         }
 
         return $this->render('question/index.html.twig', [

@@ -16,7 +16,7 @@ class Status
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $Libelle = null;
+    private ?string $libelle = null;
 
     #[ORM\OneToMany(mappedBy: 'status', targetEntity: Quiz::class)]
     private Collection $quiz;
@@ -24,6 +24,12 @@ class Status
     public function __construct()
     {
         $this->quiz = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->libelle;
+
     }
 
     public function getId(): ?int
