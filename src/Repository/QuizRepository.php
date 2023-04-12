@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Quiz;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -38,6 +39,27 @@ class QuizRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+    public function findAllQuizs(
+        int $statusId = 4,
+        bool $exclude = true,
+        int $batch = 1,
+        int $batchSize = 500
+    ): array {
+        $query = $this->createQueryBuilder("t")
+            ->andWhere($exclude ? "t.status != :status" : "t.status = :status")
+            ->setParameter("status", $statusId)
+            ->orderBy("t.dateDebut", "DESC")
+            ->setFirstResult(($batch - 1) * $batchSize)
+            ->setMaxResults($batchSize);
+
+        $paginatedResult = new Paginator($query, true);
+        $count = count($paginatedResult);
+
+        return ["results" => $paginatedResult, "total" => $count];
+    }
+
+
 
 //    /**
 //     * @return Quiz[] Returns an array of Quiz objects

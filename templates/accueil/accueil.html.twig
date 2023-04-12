@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="accueil-view">
+{#    <h1>{{nom}}</h1>#}
+    <div class="accueil-block-ticket">
+        <div class="accueil-def-ticket">Titre</div>
+        <div class="accueil-def-ticket">Status</div>
+        <div class="accueil-def-ticket accueil-description">Date début</div>
+        <div class="accueil-def-ticket accueil-gravite">Date Fin</div>
+
+    </div>
+
+
+    <div class="all-tickets-container">
+
+        {% for quiz in quizs %}
+            <div class="accueil-block-ticket" >
+                <a href="{{path('app_reponse_QCM_create', {'id': quiz.id }) }}">
+
+                    <div class="accueil-contenu-ticket accueil-titre">
+                        {{ quiz.nom }}
+                    </div>
+
+                    <div class="accueil-contenu-ticket accueil-description">
+                        {{ quiz.status }}
+                    </div>
+                    <div class="accueil-contenu-ticket accueil-description">
+                        {{ quiz.dateDebut | date('d M Y') }}
+                    </div>
+                    <div class="accueil-contenu-ticket accueil-description">
+                        {{ quiz.dateFin | date('d M Y') }}
+                    </div>
+
+                </a>
+            </div>
+        {% endfor %}
+
+
+    </div>
+</div>
+{% endblock %}

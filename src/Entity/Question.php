@@ -41,6 +41,10 @@ class Question
     #[ORM\Column(length: 255)]
     private ?string $reponse4 = null;
 
+    #[ORM\ManyToOne(inversedBy: 'questions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Quiz $quiz = null;
+
     public function __construct()
     {
         $this->reponses = new ArrayCollection();
@@ -166,6 +170,18 @@ class Question
     public function setReponse4(string $reponse4): self
     {
         $this->reponse4 = $reponse4;
+
+        return $this;
+    }
+
+    public function getQuiz(): ?Quiz
+    {
+        return $this->quiz;
+    }
+
+    public function setQuiz(?Quiz $quiz): self
+    {
+        $this->quiz = $quiz;
 
         return $this;
     }

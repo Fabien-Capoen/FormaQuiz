@@ -39,6 +39,25 @@ class QuestionRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllQuestions(
+        int $statusId = 4,
+        bool $exclude = true,
+        int $batch = 1,
+        int $batchSize = 500
+    ): array {
+        $query = $this->createQueryBuilder("t")
+            ->andWhere($exclude ? "t.status != :status" : "t.status = :status")
+            ->setParameter("status", $statusId)
+            ->orderBy("t.dateDebut", "DESC")
+            ->setFirstResult(($batch - 1) * $batchSize)
+            ->setMaxResults($batchSize);
+
+        $paginatedResult = new Paginator($query, true);
+        $count = count($paginatedResult);
+
+        return ["results" => $paginatedResult, "total" => $count];
+    }
+
 //    /**
 //     * @return Question[] Returns an array of Question objects
 //     */
