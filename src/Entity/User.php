@@ -34,6 +34,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $prenom = null;
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Copie::class)]
+    private Collection $copies;
 
     #[ORM\ManyToOne(inversedBy: 'users')]
     private ?Formation $formation = null;
@@ -93,6 +95,24 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $roles[] = 'ROLE_USER';
 
         return array_unique($roles);
+    }
+
+    public function getCopies(): Collection
+    {
+        return $this->copies;
+    }
+
+
+    public function removeCopy(Copie $copy): self
+    {
+        if ($this->copies->removeElement($copy)) {
+            // set the owning side to null (unless already changed)
+            if ($copy->getQuiz() === $this) {
+                $copy->setQuiz(null);
+            }
+        }
+
+        return $this;
     }
 
     public function setRoles(array $roles): self

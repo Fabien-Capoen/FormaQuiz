@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\Quiz;
+use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,7 +20,7 @@ class QuizType extends AbstractType
             ->add('date_debut', DateType::class)
             ->add('date_fin', DateType::class)
             ->add('formation')
-            ->add('user')
+            ->add('noteMax')
             ->add("Envoyer", SubmitType::class, ["attr" => ["class" => "button"]]);
         ;
     }
@@ -30,4 +31,5 @@ class QuizType extends AbstractType
             'data_class' => Quiz::class,
         ]);
     }
+
 }

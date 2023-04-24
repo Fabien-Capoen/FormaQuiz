@@ -84,12 +84,14 @@ class DevController extends AbstractController
         $quiz = new Quiz();
         $form = $this->createForm(QuizType::class, $quiz);
         $form->handleRequest($request);
+        $currentUser = $this->getUser();
 
         if ($form->isSubmitted() && $form->isValid()){
+            $quiz->setUser($currentUser);
             $manager->persist($quiz);
             $manager->flush();
 
-            return $this->render('provisoire/provisoire.html.twig');
+            return $this->redirectToRoute('app_quiz_suivi', ['id'=>$quiz->getId() ]);
         }
 
         return $this->render('question/index.html.twig', [

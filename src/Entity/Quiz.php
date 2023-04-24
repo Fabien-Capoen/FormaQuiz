@@ -45,6 +45,9 @@ class Quiz
     #[ORM\OneToMany(mappedBy: 'quiz', targetEntity: Question::class)]
     private Collection $questions;
 
+    #[ORM\Column(length: 255)]
+    private ?float $note_max = null;
+
     public function __construct()
     {
         $this->copies = new ArrayCollection();
@@ -205,6 +208,18 @@ class Quiz
                 $question->setQuiz(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getNoteMax(): ?float
+    {
+        return $this->note_max;
+    }
+
+    public function setNoteMax(float $note_max): self
+    {
+        $this->note_max = $note_max;
 
         return $this;
     }

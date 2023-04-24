@@ -14,7 +14,7 @@ class QuestionType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('quiz')
+//            ->add('quiz')
             ->add('questionType')
             ->add('note_max')
             ->add('question')

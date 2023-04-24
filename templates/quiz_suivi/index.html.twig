@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello QuizSuiviController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Suivi du Quiz ✅</h1>
+
+    <div>
+        {% if ('ROLE_PROF' in app.user.roles) %}
+            <a href="{{ path('app_question_create', {'id': quiz.id}) }}">
+                <button class="create-comment-button button">
+                    Créer une Question
+                </button>
+            </a>
+        {% endif %}
+    </div>
+    This friendly message is coming from:
+    <ul>
+        <li>Your controller at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/src/Controller/QuizSuiviController.php'|file_link(0) }}">src/Controller/QuizSuiviController.php</a></code></li>
+        <li>Your template at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/templates/quiz_suivi/index.html.twig'|file_link(0) }}">templates/quiz_suivi/index.html.twig</a></code></li>
+    </ul>
+{#    On effectue une boucle pour balayer toutes les questions du quiz #}
+    {% for question in quiz.questions %}
+        <p class="question-description">{{ question.question }} ( / {{ question.noteMax }} ) </p>
+        <a href="{{ path('app_reponse_QCM_create', {'id': question.id}) }}">
+            <button class="create-comment-button button">Répondre</button>
+        </a>
+    {% endfor %}
+
+    <div>
+        <a href="{{ path('app_accueil') }}">
+            <button class="create-comment-button button">Terminer</button>
+        </a>
+    </div>
+</div>
+{% endblock %}
