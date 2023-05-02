@@ -14,14 +14,17 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/** on récpuère toutes les fonctions d'AbstractController et on les associes à ReponseController,
+ Exemple : $this->getUser()
+ */
 class ReponseController extends AbstractController
 {
     use QuizSuiviTrait;
     #[Route('/reponse/qcm/create/{id}', name: 'app_reponse_QCM_create')]
     public function qcmReponse(
-        EntityManagerInterface $manager,
-        Request $request,
-        Question $currentQuestion,
+        EntityManagerInterface $manager,  // permet de faire le lien avec l'entité et la  la bdd
+        Request $request,                  // permet au code d'accéder à la requête
+        Question $currentQuestion,         // on récupère le paramètre {id} et on l'associe à $currentquestion
     ): Response
     {
         $qcmReponse = new Reponse();
@@ -29,6 +32,10 @@ class ReponseController extends AbstractController
         $currentUser = $this->getUser();
         $form = $this->createForm(QCMReponseType::class, $qcmReponse);
 
+        /** permet au formulaire de traiter les requêtes reçues,
+         * sans ça le formulaire ne pourrait jamais traiter les requêtes envoyées depuis le front quand on appuie sur "envoyer"
+         * ici le formulaire peut alors vérifier les conditions "isValid" et "isSubmitted"
+         */
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
@@ -36,7 +43,7 @@ class ReponseController extends AbstractController
             $manager->persist($qcmReponse);
             $manager->flush();
 
-            return $this->render('provisoire/provisoire.html.twig');
+            return $this->redirectToRoute('app_quiz_suivi', ['id'=>$currentQuestion->getQuiz()->getId()]);
         }
 
         return $this->render('reponse/index.html.twig', [
@@ -46,27 +53,33 @@ class ReponseController extends AbstractController
         ]);
     }
 
-    #[Route('/reponse/qcr/create', name: 'app_reponse_QCR_create')]
+    #[Route('/reponse/qcr/create/{id}', name: 'app_reponse_QCR_create')]
     public function qcrReponse(
         EntityManagerInterface $manager,
         Request $request,
+        Question $currentQuestion,
+
     ): Response
     {
-
         $qcrReponse = new Reponse();
+        $qcrReponse->setQuestion($currentQuestion);
+        $currentUser = $this->getUser();
         $form = $this->createForm(\QCRReponseType::class, $qcrReponse);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+            $qcrReponse->setUser($currentUser);
             $manager->persist($qcrReponse);
             $manager->flush();
 
-            return $this->render('provisoire/provisoire.html.twig');
+            return $this->redirectToRoute('app_quiz_suivi', ['id'=>$currentQuestion->getQuiz()->getId()]);
         }
 
-        return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController', "form"=>$form,
+        return $this->render('reponse/index.html.twig', [
+            'controller_name' => 'ReponseController', "form"=>$form,
+            'question'=> $currentQuestion,
+            'user'=>$currentUser,
         ]);
     }
 }

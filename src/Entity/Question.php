@@ -29,16 +29,16 @@ class Question
     #[ORM\JoinColumn(nullable: false)]
     private ?QuestionType $questionType = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $reponse1 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $reponse2 = null;
 
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $reponse3 = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     private ?string $reponse4 = null;
 
     #[ORM\ManyToOne(inversedBy: 'questions')]

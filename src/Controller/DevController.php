@@ -55,26 +55,6 @@ class DevController extends AbstractController
         return $this->render('provisoire/provisoire.html.twig');
     }
 
-    #[Route('/dev/copie/create', name: 'app_dev_copie_create')]
-    public function copie(
-        EntityManagerInterface $manager,
-        Request $request,
-    ): Response{
-        $copie = new Copie();
-        $form = $this->createForm(CopieType::class, $copie);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()){
-            $manager->persist($copie);
-            $manager->flush();
-
-            return $this->render('provisoire/provisoire.html.twig');
-        }
-
-        return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController', "form"=>$form,
-        ]);
-    }
 
     #[Route('/dev/quiz/create', name: 'app_dev_quiz_create')]
     public function quiz(

@@ -28,9 +28,15 @@
 {#    On effectue une boucle pour balayer toutes les questions du quiz #}
     {% for question in quiz.questions %}
         <p class="question-description">{{ question.question }} ( / {{ question.noteMax }} ) </p>
+        {%  if (question.questionType.id==1) %}
         <a href="{{ path('app_reponse_QCM_create', {'id': question.id}) }}">
             <button class="create-comment-button button">Répondre</button>
         </a>
+            {% else %}
+                <a href="{{ path('app_reponse_QCR_create', {'id': question.id}) }}">
+                    <button class="create-comment-button button">Répondre</button>
+                </a>
+        {%  endif %}
     {% endfor %}
 
     <div>

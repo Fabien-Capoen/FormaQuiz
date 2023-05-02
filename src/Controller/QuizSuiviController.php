@@ -29,7 +29,6 @@ class QuizSuiviController extends AbstractController
         }
 
         $objects = $this->getQuizSuivi($quiz);
-
         return $this->render("quiz_suivi/index.html.twig", [
             "quiz" => $quiz,
 //            "objects" => $objects,

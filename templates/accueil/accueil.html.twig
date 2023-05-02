@@ -2,16 +2,26 @@
 
 {% block body %}
 <div class="accueil-view">
-    {#    <h1>{{nom}}</h1>#}
+
+    {#  Bouton Créer un Quizz si le user à le role PROF #}
+    {% if ('ROLE_PROF' in app.user.roles) %}
     <div>
-        {% if ('ROLE_PROF' in app.user.roles) %}
             <a href="{{ path('app_dev_quiz_create') }}">
                 <button class="create-comment-button button">
                     Créer un Quiz
                 </button>
             </a>
-        {% endif %}
+
     </div>
+    <br/>
+    {% endif %}
+
+    {# Bouton Logout#}
+    <a href="{{ path('app_logout') }}">
+        <button class="create-comment-button button">
+            Se déconnecter
+        </button>
+    </a>
 
     <div class="accueil-block-ticket">
         <div class="accueil-def-ticket">Titre</div>
@@ -26,7 +36,7 @@
         {% for quiz in quizs %}
 
             <div class="accueil-block-ticket" >
-                <a href="{{path('app_quiz_suivi', {'id': quiz.id }) }}">
+                <a href="{{path('app_copie_create', {'id': quiz.id }) }}">
 
                     <div class="accueil-contenu-ticket accueil-titre">
                         {{ quiz.nom }}

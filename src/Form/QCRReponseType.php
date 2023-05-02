@@ -11,8 +11,6 @@ class QCRReponseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('user')
-            ->add('question')
             ->add('reponse')
             ->add("Envoyer", SubmitType::class, ["attr" => ["class" => "button"]]);
         ;
