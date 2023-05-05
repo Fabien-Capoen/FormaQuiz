@@ -5,13 +5,15 @@ namespace App\Trait;
 use App\Entity\Quiz;
 use Doctrine\Common\Collections\Collection;
 
-trait QuizSuiviTrait
+trait CopiesDuQuizTrait
 {
-    public function getQuizSuivi(Quiz $quiz): array {
+    public function getCopiesDuQuiz(Quiz $quiz): array {
         // Nous récupérons les questions correspondant au Quiz
-        $questions = $quiz->getQuestions();
+        $copies = $quiz->getCopies();
 
-        $elementsSuivi = $questions->toArray();
+        $elementsSuivi = array_merge(
+            $copies->toArray()
+        );
         return $elementsSuivi;
     }
 }

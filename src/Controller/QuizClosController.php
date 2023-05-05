@@ -2,17 +2,17 @@
 
 namespace App\Controller;
 
-use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\Quiz;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class AccueilController extends AbstractController
+class QuizClosController extends AbstractController
 {
-    #[Route("/accueil", name: "app_accueil", methods: ["get"])]
-    public function Accueil(EntityManagerInterface $manager): Response
+    #[Route('/quiz/clos', name: 'app_quiz_clos')]
+    public function index(EntityManagerInterface $manager): Response
     {
         if ($this->isGranted ('ROLE_PROF')){
             return $this->accueilProf($manager);
@@ -22,12 +22,10 @@ class AccueilController extends AbstractController
         return new RedirectResponse($this->generateUrl("app_login"));
     }
 
-
     private function accueilProf(EntityManagerInterface $manager): Response
     {
         $quizs = $manager->getRepository(Quiz::class)->findAllQuizs();
-
-        return $this->render("accueil/accueil.html.twig", [
+        return $this->render("quiz_clos/QuizClos.twig", [
             "quizs" => $quizs["results"],
             "isUser" => true,
             "titre" => "Tous les tickets",
@@ -39,7 +37,7 @@ class AccueilController extends AbstractController
         $currentUser = $this->getUser();
         $formation = $currentUser->getFormation();
         $quizs = $formation->getQuiz();
-        return $this->render("accueil/accueil.html.twig", [
+        return $this->render("quiz_clos/QuizClos.twig", [
             "quizs" => $quizs,
             "isUser" => true,
             "titre" => "Tous les tickets",

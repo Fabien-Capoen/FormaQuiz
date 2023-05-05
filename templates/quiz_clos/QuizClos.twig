@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CopieSuiviController!{% endblock %}
+
+{% block body %}
+    <style>
+        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+    </style>
+
+    {% if ('ROLE_PROF' in app.user.roles) %}
+        <div>
+            <a href="{{ path('app_dev_quiz_create') }}">
+                <button class="create-comment-button button">
+                    Créer un Quiz
+                </button>
+            </a>
+            <br/>
+            <br/>
+            <a href="/accueil">
+                <button>
+                    Quizs en cours
+                </button>
+            </a>
+
+        </div>
+        <br/>
+    {% endif %}
+
+    {# Bouton Logout#}
+    <a href="{{ path('app_logout') }}">
+        <button class="create-comment-button button">
+            Se déconnecter
+        </button>
+    </a>
+
+    <div class="accueil-block-ticket">
+        <div class="accueil-def-ticket">Titre</div>
+        <div class="accueil-def-ticket">Status</div>
+        <div class="accueil-def-ticket accueil-description">Date début</div>
+        <div class="accueil-def-ticket accueil-gravite">Date Fin</div>
+    </div>
+
+    <div class="all-tickets-container">
+        {% for quiz in quizs %}
+
+            {% if date(quiz.datefin) < date() %}
+            <div class="accueil-block-ticket" >
+                <a href="{{path('app_copies_du_quiz', {'id': quiz.id }) }}">
+                    <div class="accueil-contenu-ticket accueil-titre">
+                        {{ quiz.nom }}
+                    </div>
+                    <div class="accueil-contenu-ticket accueil-description">
+                        {{ quiz.status }}
+                    </div>
+                    <div class="accueil-contenu-ticket accueil-description">
+                        {{ quiz.dateDebut | date('d M Y') }}
+                    </div>
+                    <div class="accueil-contenu-ticket accueil-description">
+                        {{ quiz.dateFin | date('d M Y') }}
+                    </div>
+                </a>
+            </div>
+            {% endif %}
+
+        {% endfor %}
+    <div/>
+{% endblock %}

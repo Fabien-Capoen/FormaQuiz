@@ -55,6 +55,7 @@ class CopieController extends AbstractController
             $manager->persist($copie);
             $manager->flush();
         }
+
         return $this->redirectToRoute('app_quiz_suivi', ['id' => $currentQuiz->getId()]);
     }
 }

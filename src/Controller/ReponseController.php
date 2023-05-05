@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Copie;
 use App\Entity\Question;
 use App\Entity\Reponse;
 use App\Entity\User;
@@ -22,16 +23,24 @@ class ReponseController extends AbstractController
     use QuizSuiviTrait;
     #[Route('/reponse/qcm/create/{id}', name: 'app_reponse_QCM_create')]
     public function qcmReponse(
-        EntityManagerInterface $manager,  // permet de faire le lien avec l'entité et la  la bdd
+        EntityManagerInterface $manager,   // permet de faire le lien avec l'entité et la  la bdd
         Request $request,                  // permet au code d'accéder à la requête
-        Question $currentQuestion,         // on récupère le paramètre {id} et on l'associe à $currentquestion
+        Question $currentQuestion          // on récupère le paramètre {id} et on l'associe à $currentquestion
     ): Response
     {
-        $qcmReponse = new Reponse();
-        $qcmReponse->setQuestion($currentQuestion);
         $currentUser = $this->getUser();
-        $form = $this->createForm(QCMReponseType::class, $qcmReponse);
+        $qcmReponse = $manager->getRepository(Reponse::class)->findOneBy(['user'=>$currentUser,'question'=>$currentQuestion]);
 
+        if (null === $qcmReponse)
+        {
+            $copie = $manager->getRepository(Copie::class)->findOneBy(['quiz'=>$currentQuestion->getQuiz(), 'user'=>$currentUser]);
+            $qcmReponse = new Reponse();
+            $qcmReponse->setQuestion($currentQuestion);
+            $qcmReponse->setUser($currentUser);
+            $qcmReponse->setCopie($copie);
+        }
+
+        $form = $this->createForm(QCMReponseType::class, $qcmReponse);
         /** permet au formulaire de traiter les requêtes reçues,
          * sans ça le formulaire ne pourrait jamais traiter les requêtes envoyées depuis le front quand on appuie sur "envoyer"
          * ici le formulaire peut alors vérifier les conditions "isValid" et "isSubmitted"
@@ -39,10 +48,8 @@ class ReponseController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $qcmReponse->setUser($currentUser);
             $manager->persist($qcmReponse);
             $manager->flush();
-
             return $this->redirectToRoute('app_quiz_suivi', ['id'=>$currentQuestion->getQuiz()->getId()]);
         }
 
@@ -61,15 +68,20 @@ class ReponseController extends AbstractController
 
     ): Response
     {
-        $qcrReponse = new Reponse();
-        $qcrReponse->setQuestion($currentQuestion);
         $currentUser = $this->getUser();
-        $form = $this->createForm(\QCRReponseType::class, $qcrReponse);
+        $qcrReponse = $manager->getRepository(Reponse::class)->findOneBy(['user'=>$currentUser,'question'=>$currentQuestion]);
 
+        if(null === $qcrReponse){
+            $qcrReponse = new Reponse();
+            $qcrReponse->setQuestion($currentQuestion);
+            $qcrReponse->setUser($currentUser);
+
+        }
+
+        $form = $this->createForm(\QCRReponseType::class, $qcrReponse);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
-            $qcrReponse->setUser($currentUser);
             $manager->persist($qcrReponse);
             $manager->flush();
 
