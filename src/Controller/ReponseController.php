@@ -72,9 +72,11 @@ class ReponseController extends AbstractController
         $qcrReponse = $manager->getRepository(Reponse::class)->findOneBy(['user'=>$currentUser,'question'=>$currentQuestion]);
 
         if(null === $qcrReponse){
+            $copie = $manager->getRepository(Copie::class)->findOneBy(['quiz'=>$currentQuestion->getQuiz(), 'user'=>$currentUser]);
             $qcrReponse = new Reponse();
             $qcrReponse->setQuestion($currentQuestion);
             $qcrReponse->setUser($currentUser);
+            $qcrReponse->setCopie($copie);
 
         }
 

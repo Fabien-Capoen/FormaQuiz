@@ -23,7 +23,7 @@ class DevController extends AbstractController
     ): Response{
         $questionType = new QuestionType();
         $questionType
-            ->setLibelle("QCR");
+            ->setLibelle("QCM");
         $entityManager->persist($questionType);
         $entityManager->flush();
 
@@ -35,7 +35,7 @@ class DevController extends AbstractController
     ): Response{
         $status = new Status();
         $status
-            ->setLibelle("Corrigé");
+            ->setLibelle("Clos");
         $entityManager->persist($status);
         $entityManager->flush();
 
@@ -48,7 +48,7 @@ class DevController extends AbstractController
     ): Response{
         $formation = new Formation();
         $formation
-            ->setLibelle("BTS IMMO");
+            ->setLibelle("BTS SIO");
         $entityManager->persist($formation);
         $entityManager->flush();
 

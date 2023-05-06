@@ -42,6 +42,7 @@ class CopieCorrectionController extends AbstractController
             "isAllowed" => $isAllowed,
             "reponses" => $copie->getReponses(),
             "copie" => $copie,
+            "quiz" => $copie->getQuiz(),
             "quizNoteMax" => $copie->getQuiz()->getNoteMax(),
         ]);
     }
@@ -50,7 +51,6 @@ class CopieCorrectionController extends AbstractController
     public function CopieCorrectionFlush(Copie $copie, \Symfony\Component\HttpFoundation\Request $request): Response
     {
         $currentUser = $this->getUser();
-        $copie->getId();
         $request->getContent();
         dd($request);
 

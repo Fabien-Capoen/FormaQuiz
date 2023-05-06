@@ -36,10 +36,11 @@ security:
         # - { path: ^/admin, roles: ROLE_ADMIN }
         # - { path: ^/profile, roles: ROLE_USER }
     role_hierarchy:
-        ROLE_USER: [ ROLE_USER, ROLE_ELEVE ]
+
         ROLE_ADMIN: ROLE_USER
         ROLE_SUPER_ADMIN: [ ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH ]
         ROLE_PROF: ROLE_PROF
+        ROLE_ELEVE: ROLE_ELEVE
 
 
 when@test:

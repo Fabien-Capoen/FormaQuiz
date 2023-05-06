@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Copie;
 use App\Entity\Quiz;
+use App\Entity\User;
 use App\Form\CopieType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -46,16 +47,18 @@ class CopieController extends AbstractController
          *Si le if nous renvoie Null ( donc n'existe pas ) on créé la copie
          *Si le if nous renvoie autre chose que null ( donc elle existe ) on ne créé pas la copie
          */
-        if (null === $manager->getRepository(Copie::class)->findOneBy(['user'=>$currentUser,'quiz'=>$currentQuiz]))
-        {
-            $copie = new Copie();
-            $copie->setUser($currentUser);
-            $copie->setQuiz($currentQuiz);
+        if ($this->isGranted ('ROLE_ELEVE')) {
 
-            $manager->persist($copie);
-            $manager->flush();
+            if (null === $manager->getRepository(Copie::class)->findOneBy(['user' => $currentUser, 'quiz' => $currentQuiz])) {
+                $copie = new Copie();
+                $copie->setUser($currentUser);
+                $copie->setQuiz($currentQuiz);
+
+                $manager->persist($copie);
+                $manager->flush();
+            }
+
         }
-
         return $this->redirectToRoute('app_quiz_suivi', ['id' => $currentQuiz->getId()]);
     }
 }

@@ -9,7 +9,7 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
+    <h1>{{ controller_name }}! ✅</h1>
 
     This friendly Controller is coming from:
     <ul>
@@ -17,6 +17,16 @@
         <li>Your template at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/templates/copies_du_quiz/CopiesDuQuiz.twig'|file_link(0) }}">templates/copies_du_quiz/index.html.twig</a></code></li>
     </ul>
 </div>
+    {% if ('ROLE_PROF' in app.user.roles) %}
+        <div>
+            <a href="/quiz/clos">
+                <button>
+                    Quiz terminés
+                </button>
+            </a>
+        </div>
+        <br/>
+    {% endif %}
     <h1> Liste des Copies</h1>
     {% for copie in quiz.copies %}
         <a href="{{ path('app_copie_correction', {'id': copie.id}) }}">

@@ -37,14 +37,14 @@ class Status
         return $this->id;
     }
 
-    public function getLibelle(): ?string
+    public function getlibelle(): ?string
     {
-        return $this->Libelle;
+        return $this->libelle;
     }
 
-    public function setLibelle(string $Libelle): self
+    public function setLibelle(string $libelle): self
     {
-        $this->Libelle = $Libelle;
+        $this->libelle = $libelle;
 
         return $this;
     }
