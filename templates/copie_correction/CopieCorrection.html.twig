@@ -22,6 +22,7 @@
             {% for reponse in reponses  %}
                 {%  if (question.questionType.id==1) %}
 
+    <form action="{{path('app_copie_correction_flush', {'id': copie.id }) }}" method="post">
                     {% if reponse.question.id == question.id %}
                         <p>{{ question.reponse1 }}
                             <input type="checkbox" {{ reponse.choixrep1 ? "checked":"" }}/>
@@ -35,14 +36,15 @@
                         <p>{{ question.reponse4 }}
                             <input type="checkbox" {{ reponse.choixrep4 ? "checked":"" }}/>
                         </p>
-                        <div>
-                            Annotation : <br/>
-                        <textarea>{{ reponse.annotation }}</textarea>
-                        <div/>
-                        <div>
-                            Note de la question : <br/>
-                            <input value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
-                        <div/>
+                            <div>
+                                Annotation : <br/>
+                            <textarea name="annotation-{{ reponse.id }}">{{ reponse.annotation }}</textarea>
+                            <div/>
+                            <div>
+                                Note de la question : <br/>
+                                <input name="note-{{ reponse.id }}"value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
+                            <div/>
+
                     {% endif %}
 
                 {% else %}
@@ -51,25 +53,25 @@
                         </p>
                         <div>
                             Annotation : <br/>
-                            <textarea>{{ reponse.annotation }}</textarea>
+                            <textarea name="annotation-{{ reponse.id }}">{{ reponse.annotation }}</textarea>
                         <div/>
                         <div>
                             Note de la question : <br/>
-                            <input value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
+                            <input name="note-{{ reponse.id }}" value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
                         <div/>
 
                     {% endif %}
                 {% endif %}
 
+
             {% endfor %}
         {% endfor %}
         <h1> Annotation générale</h1>
-        <textarea> {{ copie.annotation }}</textarea>
+        <textarea name="annotation-copie"> {{ copie.annotation }}</textarea>
         <h1>Note de la copie</h1>
-        <input value="{{ copie.note }}" type="number" min="0" max="{{ quizNoteMax }}"/>
+        <input name="note-copie" value="{{ copie.note }}" type="number" min="0" max="{{ quizNoteMax }}"/>
         <br/>
-        <a href="{{path('app_copies_du_quiz', {'id': quiz.id }) }}">
-            <button> Valider </button>
-        </a>
+            <button type="submit"> Valider </button>
+    <form/>
     </div>
 {% endblock %}
