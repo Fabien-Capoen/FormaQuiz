@@ -1,5 +1,6 @@
-@use "/assets/styles/theme";
-
+body{
+	font-family: "Manrope", sans-serif;
+}
 .login-boite-parent {
 	width: 100%;
 	height: 100vh;
@@ -12,7 +13,7 @@
 }
 
 .login-boite-gauche {
-	background: center / cover url("/public/img/test4.png");
+	background: center / cover url("/img/test4.png");
 }
 .login-flou {
 	height: 100%;
@@ -33,10 +34,10 @@
 	font-size: 32px;
 	color: white;
 
-	& > p {
-		font-size: 24px;
-	}
 }
+.login-texte-gauche p {
+	  font-size: 24px;
+  }
 
 .login-boite-droite {
 	display: flex;
@@ -49,11 +50,12 @@
 	flex-direction: column;
 	row-gap: 16px;
 	max-width: 50%;
+}
 
-	label {
+.login-boite-droite > form label {
 		font-weight: bold;
 	}
-}
+
 
 .champ-form {
 	display: flex;
@@ -62,7 +64,7 @@
 
 .login-boite-droite > form input {
 	padding: 8px 16px;
-	border: solid 1px theme.$border;
+	border: solid 1px rgba(0,0,0,0.8);
 	border-radius: 8px;
 	outline: 2px solid transparent;
 }
@@ -70,18 +72,18 @@
 	position: relative;
 	margin-top: 8px;
 	transition: outline-color 0.15s ease-in-out;
-
-	&:hover {
-		outline-color: theme.$secondary;
-	}
-	&:active {
-		outline-color: theme.$secondary;
-	}
-
-	&:focus {
-		outline-color: theme.$secondary;
-	}
 }
+
+.text-input:hover {
+		outline-color: rgba(0,0,0,0.6);
+	}
+.text-input:active {
+		outline-color: rgba(0,0,0,0.6);
+	}
+
+.text-input:focus {
+		outline-color: rgba(0,0,0,0.6);
+	}
 .checkbox input {
 	margin-right: 8px;
 }
@@ -91,7 +93,7 @@
 	padding: 10px 16px;
 	border-radius: 8px;
 	border: none;
-	background: theme.$secondary;
+	background: rgba(0,0,0,0.6);
 	color: white;
 	cursor: pointer;
 }
