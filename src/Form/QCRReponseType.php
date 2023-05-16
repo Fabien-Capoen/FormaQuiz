@@ -3,6 +3,7 @@
 use App\Entity\Reponse;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -11,7 +12,7 @@ class QCRReponseType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('reponse')
+            ->add('reponse', TextareaType::class, ['required'   => false, 'empty_data' => ''])
             ->add("Envoyer", SubmitType::class, ["attr" => ["class" => "button"]]);
         ;
     }

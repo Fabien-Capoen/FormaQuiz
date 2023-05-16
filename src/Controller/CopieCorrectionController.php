@@ -38,7 +38,6 @@ class CopieCorrectionController extends AbstractController
 
 
         return $this->render("copie_correction/CopieCorrection.html.twig", [
-            "controller_name"=> "Correction de la copie",
             "questions" => $copie->getQuiz()->getQuestions(),
 //            "objects" => $objects,
             "isAllowed" => $isAllowed,

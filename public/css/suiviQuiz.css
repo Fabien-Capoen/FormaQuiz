@@ -1,0 +1,23 @@
+.quiz-suivi h1{
+    text-align: center;
+}
+.creer-question{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.bloc-question{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-top: solid 1px;
+    border-bottom: solid 1px;
+}
+
+.fin-quiz{
+    display: flex;
+    justify-content: center;
+}

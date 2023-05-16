@@ -74,8 +74,8 @@ class DevController extends AbstractController
             return $this->redirectToRoute('app_quiz_suivi', ['id'=>$quiz->getId() ]);
         }
 
-        return $this->render('question/index.html.twig', [
-            'controller_name' => 'QuestionController', "form"=>$form,
+        return $this->render('quiz/index.html.twig', [
+            'controller_name' => "Création d'un quiz", "form"=>$form,
         ]);
     }
 }

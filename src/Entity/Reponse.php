@@ -42,7 +42,7 @@ class Reponse
     #[ORM\Column(nullable: true)]
     private ?bool $choixrep4 = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reponse')]
+    #[ORM\ManyToOne(inversedBy: 'qcm_reponse')]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

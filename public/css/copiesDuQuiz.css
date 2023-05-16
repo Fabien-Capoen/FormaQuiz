@@ -1,0 +1,20 @@
+.copies-du-quiz h1{
+    display: flex;
+    justify-content: center;
+}
+
+.copie-eleve{
+    padding: 5px 0;
+}
+.copie-eleve:hover{
+    background-color: rgba(0, 0, 0, 0.06);
+}
+.copies-du-quiz a{
+    text-decoration: none;
+    color: rgba(0,0,0,0.8);
+}
+
+.copies-du-quiz-retour{
+    display: flex;
+    justify-content: center;
+}

@@ -10,6 +10,11 @@
 
 <div class="example-wrapper">
     <h1>{{ question.question }} ( / {{ question.noteMax }} ) </h1>
-    {{ form(form) }}
+    {{ form_start(form) }}
+        {{ form_row(form.choixrep1) }} <br/>
+        {{ form_row(form.choixrep2) }} <br/>
+        {{ form_row(form.choixrep3) }} <br/>
+        {{ form_row(form.choixrep4) }} <br/>
+    {{ form_end(form) }}
 </div>
 {% endblock %}

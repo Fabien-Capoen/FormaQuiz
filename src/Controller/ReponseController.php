@@ -21,7 +21,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ReponseController extends AbstractController
 {
     use QuizSuiviTrait;
-    #[Route('/reponse/qcm/create/{id}', name: 'app_reponse_QCM_create')]
+    #[Route('/qcm_reponse/qcm/create/{id}', name: 'app_reponse_QCM_create')]
     public function qcmReponse(
         EntityManagerInterface $manager,   // permet de faire le lien avec l'entité et la  la bdd
         Request $request,                  // permet au code d'accéder à la requête
@@ -53,14 +53,14 @@ class ReponseController extends AbstractController
             return $this->redirectToRoute('app_quiz_suivi', ['id'=>$currentQuestion->getQuiz()->getId()]);
         }
 
-        return $this->render('reponse/index.html.twig', [
+        return $this->render('qcm_reponse/index.html.twig', [
             'controller_name' => 'ReponseController', "form"=>$form,
             'question'=> $currentQuestion,
             'user'=>$currentUser,
         ]);
     }
 
-    #[Route('/reponse/qcr/create/{id}', name: 'app_reponse_QCR_create')]
+    #[Route('/qcm_reponse/qcr/create/{id}', name: 'app_reponse_QCR_create')]
     public function qcrReponse(
         EntityManagerInterface $manager,
         Request $request,
@@ -90,7 +90,7 @@ class ReponseController extends AbstractController
             return $this->redirectToRoute('app_quiz_suivi', ['id'=>$currentQuestion->getQuiz()->getId()]);
         }
 
-        return $this->render('reponse/index.html.twig', [
+        return $this->render('qcr_reponse/index.html.twig', [
             'controller_name' => 'ReponseController', "form"=>$form,
             'question'=> $currentQuestion,
             'user'=>$currentUser,

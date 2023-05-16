@@ -1,0 +1,28 @@
+
+.form-vue{
+    margin: 1em auto;
+    max-width: 800px;
+    width: 95%;
+}
+.form-titre{
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+.form-container{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.form-gauche, .form-droite{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+.form-boutton{
+    display: flex;
+    justify-content: center;
+}

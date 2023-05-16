@@ -3,34 +3,28 @@
 {% block title %}Hello CopiesDuQuizController!{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>{{ controller_name }}! ✅</h1>
+    <div class="copies-du-quiz">
+        <h1>Copies des élèves qui ont répondus au Quiz</h1>
 
-    This friendly Controller is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/src/Controller/CopiesDuQuizController.php'|file_link(0) }}">src/Controller/CopiesDuQuizController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/templates/copies_du_quiz/CopiesDuQuiz.twig'|file_link(0) }}">templates/copies_du_quiz/index.html.twig</a></code></li>
-    </ul>
-</div>
-    {% if ('ROLE_PROF' in app.user.roles) %}
-        <div>
-            <a href="/quiz/clos">
-                <button>
-                    Quiz terminés
-                </button>
+
+        <h2> Liste des Copies</h2>
+        {% for copie in quiz.copies %}
+            <a href="{{ path('app_copie_correction', {'id': copie.id}) }}">
+                <div class="copie-eleve">
+                        <p class="question-description">- Copie de {{ copie.user }} ( / {{ quiz.noteMax }} ) </p>
+                </div>
             </a>
-        </div>
-        <br/>
-    {% endif %}
-    <h1> Liste des Copies</h1>
-    {% for copie in quiz.copies %}
-        <a href="{{ path('app_copie_correction', {'id': copie.id}) }}">
-            <p class="question-description">- Copie de {{ copie.user }} ( / {{ quiz.noteMax }} ) </p>
-        <a/>
-    {% endfor %}
+        {% endfor %}
+        {% if ('ROLE_PROF' in app.user.roles) %}
+            <div class="copies-du-quiz-retour">
+                <a href="/quiz/clos">
+                    <button class="button">
+                        Revenir aux Quizs terminés
+                    </button>
+                </a>
+            </div>
+            <br/>
+        {% endif %}
+    </div>
 {% endblock %}

@@ -3,75 +3,72 @@
 {% block title %}Hello CopieSuiviController!{% endblock %}
 
 {% block body %}
-    <style>
-        .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-        .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-    </style>
 
-    <div class="example-wrapper">
-        <h1>Hello {{ controller_name }}! ✅</h1>
+    <div class="correction-copie">
+        <h1>Correction de la copie</h1>
+        <form action="{{path('app_copie_correction_flush', {'id': copie.id }) }}" method="post">
+            {% for question in questions %}
+                <div class="correction-question">
+                    <h3>{{ question.question }}</h3>
+                </div>
+                {% for reponse in reponses  %}
+                    {%  if (question.questionType.id==1) %}
 
-        This friendly message is coming from:
-        <ul>
-            <li>Your controller at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/src/Controller/CopieCorrectionController.php'|file_link(0) }}">src/Controller/CopieSuiviController.php</a></code></li>
-            <li>Your template at <code><a href="{{ 'C:/Users/fabien.capoen/Documents/projet/forma_quiz/templates/copie_correction/CopieCorrection.html.twig'|file_link(0) }}">templates/copie_suivi/index.html.twig</a></code></li>
-        </ul>
-
-        {% for question in questions %}
-            <p class="question-description">{{ question.question }} ( / {{ question.noteMax }} ) </p>
-            {% for reponse in reponses  %}
-                {%  if (question.questionType.id==1) %}
-
-    <form action="{{path('app_copie_correction_flush', {'id': copie.id }) }}" method="post">
-                    {% if reponse.question.id == question.id %}
-                        <p>{{ question.reponse1 }}
-                            <input type="checkbox" {{ reponse.choixrep1 ? "checked":"" }}/>
-                        </p>
-                        <p>{{ question.reponse2 }}
-                            <input type="checkbox" {{ reponse.choixrep2 ? "checked":"" }}/>
-                        </p>
-                        <p>{{ question.reponse3 }}
-                            <input type="checkbox" {{ reponse.choixrep3 ? "checked":"" }}/>
-                        </p>
-                        <p>{{ question.reponse4 }}
-                            <input type="checkbox" {{ reponse.choixrep4 ? "checked":"" }}/>
-                        </p>
-                            <div>
-                                Annotation : <br/>
-                            <textarea name="annotation-{{ reponse.id }}">{{ reponse.annotation }}</textarea>
-                            <div/>
-                            <div>
-                                Note de la question : <br/>
-                                <input name="note-{{ reponse.id }}"value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
-                            <div/>
-
-                    {% endif %}
-
-                {% else %}
-                    {% if reponse.question.id == question.id %}
-                        <p> Réponse : {{ reponse.reponse }}
-                        </p>
-                        <div>
-                            Annotation : <br/>
-                            <textarea name="annotation-{{ reponse.id }}">{{ reponse.annotation }}</textarea>
-                        <div/>
-                        <div>
-                            Note de la question : <br/>
-                            <input name="note-{{ reponse.id }}" value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
-                        <div/>
-
-                    {% endif %}
-                {% endif %}
-
-
+                            {% if reponse.question.id == question.id %}
+                                <p>{{ question.reponse1 }}
+                                    <input type="checkbox" {{ reponse.choixrep1 ? "checked":"" }}/>
+                                </p>
+                                <p>{{ question.reponse2 }}
+                                    <input type="checkbox" {{ reponse.choixrep2 ? "checked":"" }}/>
+                                </p>
+                                <p>{{ question.reponse3 }}
+                                    <input type="checkbox" {{ reponse.choixrep3 ? "checked":"" }}/>
+                                </p>
+                                <p>{{ question.reponse4 }}
+                                    <input type="checkbox" {{ reponse.choixrep4 ? "checked":"" }}/>
+                                </p>
+                                <div class="bandeau-correction">
+                                    <div class="annotation-question">
+                                        Annotation : <br/>
+                                    <textarea name="annotation-{{ reponse.id }}">{{ reponse.annotation }}</textarea>
+                                    </div>
+                                    <div class="note-question">
+                                        Note de la question ( / {{ question.noteMax }} )<br/>
+                                        <input name="note-{{ reponse.id }}"value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
+                                    </div>
+                                </div>
+                            {% endif %}
+                            {% else %}
+                                {% if reponse.question.id == question.id %}
+                                    <p> <span class="intitule-reponse">Réponse :</span> {{ reponse.reponse }}
+                                    </p>
+                                    <div class="bandeau-correction">
+                                        <div class="annotation-question">
+                                            Annotation : <br/>
+                                            <textarea name="annotation-{{ reponse.id }}">{{ reponse.annotation }}</textarea>
+                                        </div>
+                                        <div class="note-question">
+                                            Note de la question ( / {{ question.noteMax }} )<br/>
+                                            <input name="note-{{ reponse.id }}" value="{{ reponse.Note }}" type="number" min="0" max="{{ question.noteMax }}"/>
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            {% endif %}
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
-        <h1> Annotation générale</h1>
-        <textarea name="annotation-copie"> {{ copie.annotation }}</textarea>
-        <h1>Note de la copie</h1>
-        <input name="note-copie" value="{{ copie.note }}" type="number" min="0" max="{{ quizNoteMax }}"/>
-        <br/>
-            <button type="submit"> Valider </button>
-    <form/>
+            <div class="bandeau-correction-generale">
+                <div class="annotation-generale">
+                    <h2> Annotation générale</h2>
+                    <textarea name="annotation-copie"> {{ copie.annotation }}</textarea>
+                </div>
+                <div class="note-generale">
+                    <h2>Note de la copie</h2>
+                    <input name="note-copie" value="{{ copie.note }}" type="number" min="0" max="{{ quizNoteMax }}"/>
+                </div>
+            </div>
+            <div class="valider-correction">
+                <button class="button" type="submit"> Valider </button>
+            </div>
+        </form>
     </div>
 {% endblock %}

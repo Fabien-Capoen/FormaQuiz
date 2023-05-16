@@ -26,7 +26,7 @@
             </a>
         </div>
 
-        <div class="accueil-block-ticket">
+        <div class="accueil-block-quiz">
             <div class="accueil-def-quiz">Titre</div>
             <div class="accueil-def-quiz">Status</div>
             <div class="accueil-def-quiz">Date début</div>
@@ -40,8 +40,8 @@
                 {% if  date() > date(quiz.datedebut) and date() < date(quiz.datefin)  %}
 
                     <div class="liens-quiz">
-                        <a {{path('app_copie_create', {'id': quiz.id }) }}">
-                            <div class="accueil-block-quizs" >
+                        <a href="{{path('app_copie_create', {'id': quiz.id }) }}">
+                            <div class="accueil-ligne-quizs" >
                                 <div class="accueil-titre-quiz">
                                     {{ quiz.nom }}
                                 </div>
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                         </a>
-                    <div/>
+                    </div>
 
                 {% endif %}
 
